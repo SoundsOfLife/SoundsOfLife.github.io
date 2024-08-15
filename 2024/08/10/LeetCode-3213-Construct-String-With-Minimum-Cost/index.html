@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"soundsoflife.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"soundsoflife.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gittalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="问题介绍You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.Imagine an empty string s.You can perform the following operation any number of">
+  <meta name="description" content="QuestionYou are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.Imagine an empty string s.You can perform the following operation any numbe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode-3213.Construct String With Minimum Cost">
 <meta property="og:url" content="https://soundsoflife.github.io/2024/08/10/LeetCode-3213-Construct-String-With-Minimum-Cost/index.html">
 <meta property="og:site_name" content="John Wu Blog">
-<meta property="og:description" content="问题介绍You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.Imagine an empty string s.You can perform the following operation any number of">
+<meta property="og:description" content="QuestionYou are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.Imagine an empty string s.You can perform the following operation any numbe">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-10T12:06:35.000Z">
-<meta property="article:modified_time" content="2024-08-15T12:26:03.599Z">
+<meta property="article:modified_time" content="2024-08-15T14:54:41.317Z">
 <meta property="article:author" content="John Wu">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -191,13 +191,6 @@
 
               <time title="Created: 2024-08-10 20:06:35" itemprop="dateCreated datePublished" datetime="2024-08-10T20:06:35+08:00">2024-08-10</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-08-15 20:26:03" itemprop="dateModified" datetime="2024-08-15T20:26:03+08:00">2024-08-15</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -219,14 +212,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="问题介绍"><a href="#问题介绍" class="headerlink" title="问题介绍"></a>问题介绍</h2><p>You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.<br>Imagine an empty string s.<br>You can perform the following operation any number of times (including zero):</p>
+        <h2 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.<br>Imagine an empty string s.<br>You can perform the following operation any number of times (including zero):</p>
 <ul>
 <li>Choose an index i in the range [0, words.length - 1].</li>
 <li>Append words[i] to s.</li>
 <li>The cost of operation is costs[i].<br>Return the minimum cost to make s equal to target. If it’s not possible, return -1.</li>
 </ul>
 <p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure>
 <p>Example 2:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure>
 
@@ -240,7 +233,7 @@
 <li>target and words[i] consist only of lowercase English letters.</li>
 <li>1 &lt;&#x3D; costs[i] &lt;&#x3D; 104</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -275,6 +268,7 @@
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -321,7 +315,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">问题介绍</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Question"><span class="nav-number">1.</span> <span class="nav-text">Question</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -434,6 +428,26 @@
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'Ov23liLsHFFPGpV53vMC',
+      clientSecret: '4609562dc80fa5dce8437db3060b668a3887c130',
+      repo        : 'SoundsOfLife.github.io',
+      owner       : 'SoundsOfLife',
+      admin       : ['SoundsOfLife'],
+      id          : 'b08ccf6431edce8dac730d81fae515ca',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
