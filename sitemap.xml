@@ -11,15 +11,6 @@
   </url>
   
   <url>
-    <loc>https://soundsoflife.github.io/2024/08/15/hello-world/</loc>
-    
-    <lastmod>2024-08-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://soundsoflife.github.io/categories/index.html</loc>
     
     <lastmod>2024-08-15</lastmod>
@@ -53,45 +44,10 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://soundsoflife.github.io/tags/Tag1/</loc>
-    <lastmod>2024-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://soundsoflife.github.io/tags/Tag2/</loc>
-    <lastmod>2024-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://soundsoflife.github.io/tags/Tag3/</loc>
-    <lastmod>2024-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
     <loc>https://soundsoflife.github.io/categories/algorithm/</loc>
-    <lastmod>2024-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://soundsoflife.github.io/categories/Category1/</loc>
-    <lastmod>2024-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://soundsoflife.github.io/categories/Category1/Category2/</loc>
     <lastmod>2024-08-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
