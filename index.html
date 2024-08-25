@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"soundsoflife.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gittalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"soundsoflife.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gittalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
@@ -72,7 +72,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -147,6 +151,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -156,6 +161,360 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/24/3259-Maximum-Energy-Boost-From-Two-Drinks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="John Wu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/24/3259-Maximum-Energy-Boost-From-Two-Drinks/" class="post-title-link" itemprop="url">3259. Maximum Energy Boost From Two Drinks</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-24 23:36:29" itemprop="dateCreated datePublished" datetime="2024-08-24T23:36:29+08:00">2024-08-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>You are given two integer
+arrays <code>energyDrinkA</code> and <code>energyDrinkB</code> of the
+same length <code>n</code> by a futuristic sports scientist. These
+arrays represent the energy boosts per hour provided by two different
+energy drinks, A and B, respectively.</p>
+<p>You want to <em>maximize</em> your total energy boost by drinking one
+energy drink <em>per hour</em>. However, if you want to switch from
+consuming one energy drink to the other, you need to wait for <em>one
+hour</em> to cleanse your system (meaning you won't get any energy boost
+in that hour).</p>
+<p>Return the <strong>maximum</strong> total energy boost you can gain
+in the next <code>n</code> hours.</p>
+<p><strong>Note</strong> that you can start consuming <em>either</em> of
+the two energy drinks.</p>
+<p>题解：</p>
+<p>有2个数组<code>energyDrinkA</code> 和 <code>energyDrinkB</code>
+每个数组长度都是n，数组的值表示每个小时提供的饮料可以持续的时长，饮料有2种A和B，可以换着喝，但是要求需要提前等待1小时，返回可以最大持续时长。
+这是一道标准的DP题目，关键点是DP的转移方程。 <span
+class="math display">\[
+\begin{align}
+&amp;dp[i][0]  表示在第i个小时喝A[i]后的最大持续时长 \\
+&amp;dp[i][0] = max(max(dp[i - 1][0], dp[i - 1][3]), dp[i - 1][1]) +
+energyDrinkA[i] \\
+&amp;dp[i][1] 表示在第i个小时没喝A[i]后的最大持续时长 \\
+&amp;dp[i][1] = max(max(dp[i - 1][0], dp[i - 1][2]), dp[i - 1][3]) \\
+&amp;dp[i][2] 表示在第i个小时喝B[i]后的最大持续时长 \\
+&amp;dp[i][2] = max(max(dp[i - 1][1], dp[i - 1][2]), dp[i - 1][3]) +
+energyDrinkB[i] \\
+&amp; dp[i][3] 表示在第i个小时没喝B[i]后的最大持续时长 \\
+&amp;dp[i][3] = max(max(dp[i - 1][0], dp[i - 1][2]), dp[i - 1][1])
+\end{align}
+\]</span></p>
+<p>有了状态转移方程以后就很容易得到答案了，时间复杂度也来到了<span
+class="math inline">\(O(N)\)</span>. <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">maxEnergyBoost</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; energyDrinkA, vector&lt;<span class="type">int</span>&gt;&amp; energyDrinkB)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">auto</span> n = energyDrinkA.<span class="built_in">size</span>();</span><br><span class="line">		vector&lt;vector&lt;<span class="type">long</span> <span class="type">long</span>&gt;&gt; <span class="built_in">dp</span>(n, <span class="built_in">vector</span>&lt;<span class="type">long</span> <span class="type">long</span>&gt;(<span class="number">4</span>));</span><br><span class="line">		dp[<span class="number">0</span>][<span class="number">0</span>] = energyDrinkA[<span class="number">0</span>]; <span class="comment">// 喝了A[0]</span></span><br><span class="line">		dp[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">0</span>; <span class="comment">// 没喝A[0]</span></span><br><span class="line">		dp[<span class="number">0</span>][<span class="number">2</span>] = energyDrinkB[<span class="number">0</span>]; <span class="comment">// 喝了B[0]</span></span><br><span class="line">		dp[<span class="number">0</span>][<span class="number">3</span>] = <span class="number">0</span>; <span class="comment">// 没喝B[0]</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">			dp[i][<span class="number">0</span>] = <span class="built_in">max</span>(<span class="built_in">max</span>(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">3</span>]), dp[i - <span class="number">1</span>][<span class="number">1</span>])+ energyDrinkA[i];</span><br><span class="line">			dp[i][<span class="number">1</span>] = <span class="built_in">max</span>(<span class="built_in">max</span>(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">2</span>]), dp[i - <span class="number">1</span>][<span class="number">3</span>]);</span><br><span class="line">			dp[i][<span class="number">2</span>] = <span class="built_in">max</span>(<span class="built_in">max</span>(dp[i - <span class="number">1</span>][<span class="number">1</span>], dp[i - <span class="number">1</span>][<span class="number">2</span>]), dp[i - <span class="number">1</span>][<span class="number">3</span>]) + energyDrinkB[i];</span><br><span class="line">			dp[i][<span class="number">3</span>] = <span class="built_in">max</span>(<span class="built_in">max</span>(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">2</span>]), dp[i - <span class="number">1</span>][<span class="number">1</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">max</span>(<span class="built_in">max</span>(dp[n - <span class="number">1</span>][<span class="number">0</span>], dp[n - <span class="number">1</span>][<span class="number">1</span>]), <span class="built_in">max</span>(dp[n - <span class="number">1</span>][<span class="number">2</span>], dp[n - <span class="number">1</span>][<span class="number">3</span>]));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/24/3169-Count-Days-Without-Meetings/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="John Wu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/24/3169-Count-Days-Without-Meetings/" class="post-title-link" itemprop="url">3169. Count Days Without Meetings</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-24 23:01:05" itemprop="dateCreated datePublished" datetime="2024-08-24T23:01:05+08:00">2024-08-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>You are given a positive integer <code>days</code> representing the
+total number of days an employee is available for work (starting from
+day 1). You are also given a 2D array <code>meetings</code> of
+size <code>n</code> where, <code>meetings[i] = [start_i, end_i]</code> represents
+the starting and ending days of meeting <code>i</code> (inclusive).</p>
+<p>Return the count of days when the employee is available for work but
+no meetings are scheduled.</p>
+<p><strong>Note:</strong> The meetings may overlap. 题解:
+给定一个整数days表示天数和一个数组，每个数组有2个值start_i,
+end_i表示从start_i天到end_i天都在开会(闭区间)，结果是返回有多少天不在开会。
+因为每场会议都有开始和结束日期，所以对每一天来说，只要知道在今天之前有多少会议开始，多少会议结束既可，如果开始会议的次数大于结束会议的次数就表示当天在开会。如果所有会议都结束了，然后开始一场会议，则从开始的那天开始，到之前所有会议结束的那天，都是没有会议的日期，所以需要记录一下所有会议都结束的那天。
+基于以上的想法，我们就有了一个 $ O(NlogN)
+$的算法，需要先排序所有的日期，同时记录一下当前日期是会议开始还是结束。
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">countDays</span><span class="params">(<span class="type">int</span> days, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; meetings)</span> </span>&#123;</span><br><span class="line">		<span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">		vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; vii;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;it : meetings) &#123;</span><br><span class="line">			vii.<span class="built_in">push_back</span>(<span class="built_in">make_pair</span>(it[<span class="number">0</span>], <span class="number">1</span>));</span><br><span class="line">			vii.<span class="built_in">push_back</span>(<span class="built_in">make_pair</span>(it[<span class="number">1</span>], <span class="number">0</span>));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">sort</span>(vii.<span class="built_in">begin</span>(), vii.<span class="built_in">end</span>());</span><br><span class="line">		<span class="type">int</span> num = <span class="number">0</span>;</span><br><span class="line">		<span class="type">int</span> prev = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> &amp; it : vii) &#123;</span><br><span class="line">			<span class="keyword">if</span> (num == <span class="number">0</span> &amp;&amp; it.first &gt; prev) &#123;</span><br><span class="line">				ans += it.first - prev - <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (it.second == <span class="number">1</span>) num++;</span><br><span class="line">			<span class="keyword">else</span> num--;</span><br><span class="line">			prev = it.first;</span><br><span class="line">		&#125;</span><br><span class="line">		ans += days - prev;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="John Wu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/" class="post-title-link" itemprop="url">C++中的Mutex</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-23 21:48:09" itemprop="dateCreated datePublished" datetime="2024-08-23T21:48:09+08:00">2024-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Language/" itemprop="url" rel="index"><span itemprop="name">Programming Language</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="引言">引言</h3>
+<p>多线程编程中，保证多线程之间的数据的同步和互斥是非常重要的工作。Mutex(互斥锁)就是常用的一种同步机制，C++
+11中引入了
+Mutex(互斥锁)这一工具，提供了一种简单高效的方式来支持多线程的数据同步，并在后续的C++
+版本中更加完善这一套工具。</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr>
+<th>类型</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mutex</td>
+<td>互斥锁，最基本的互斥锁类型，mutex
+同一时刻只允许一个线程持有锁，不可重入。</td>
+</tr>
+<tr>
+<td>recursive_mutex</td>
+<td>可重入互斥锁，同一线程可多次加锁，同时必须要求加锁和解锁的次数一直，才可释放锁。</td>
+</tr>
+<tr>
+<td>timed_mutex</td>
+<td>带超时功能的互斥锁，</td>
+</tr>
+<tr>
+<td>recursive_timed_mutex</td>
+<td>带超时功能的可重入互斥锁，</td>
+</tr>
+<tr>
+<td>shared_mutex(C++17)</td>
+<td>读写锁，允许多个线程同时读取共享数据，但在写操作时需要独占锁。</td>
+</tr>
+<tr>
+<td>shared_time_mutex(C++14)</td>
+<td>是 C++14
+引入的一种同步机制，用于实现读写锁（读多写少），并且支持超时功能。它允许多个线程同时读取共享数据，但在写操作时需要独占锁。相比于
+std::shared_mutex，std::shared_timed_mutex 还提供了超时锁定的功能。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考文档">参考文档:</h3>
+<p>https://cplusplus.com/reference/mutex/
+https://en.cppreference.com/w/cpp/header/mutex</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/18/6-824-Lab-3-Raft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="John Wu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/18/6-824-Lab-3-Raft/" class="post-title-link" itemprop="url">6.824 Lab 3: Raft</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-18 21:36:25" itemprop="dateCreated datePublished" datetime="2024-08-18T21:36:25+08:00">2024-08-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>MIT 6.824 现在叫 6.5840 是分布式系统学习课程。 Lab
+3是基于提供的代码框架实现Raft协议，要通过所有的测试用例，实验本身不难，照着Raft论文来实现既可，关键点是要细心很多地方要注意，尤其是对锁的控制以及对超时时长的把控是能否通过的实验的关键。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -208,6 +567,7 @@
 
       
           
+
       
     </div>
 
@@ -274,6 +634,7 @@
 
       
           
+
       
     </div>
 
@@ -359,7 +720,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/10/LeetCode-3213-Construct-String-With-Minimum-Cost/">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/10/3213-Construct-String-With-Minimum-Cost/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -373,7 +734,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/08/10/LeetCode-3213-Construct-String-With-Minimum-Cost/" class="post-title-link" itemprop="url">LeetCode-3213.Construct String With Minimum Cost</a>
+            <a href="/2024/08/10/3213-Construct-String-With-Minimum-Cost/" class="post-title-link" itemprop="url">LeetCode-3213.Construct String With Minimum Cost</a>
         </h2>
 
         <div class="post-meta">
@@ -406,29 +767,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.<br>Imagine an empty string s.<br>You can perform the following operation any number of times (including zero):</p>
+          <h2 id="question">Question</h2>
+<p>You are given a string target, an array of strings words, and an
+integer array costs, both arrays of the same length. Imagine an empty
+string s. You can perform the following operation any number of times
+(including zero):</p>
 <ul>
 <li>Choose an index i in the range [0, words.length - 1].</li>
 <li>Append words[i] to s.</li>
-<li>The cost of operation is costs[i].<br>Return the minimum cost to make s equal to target. If it’s not possible, return -1.</li>
+<li>The cost of operation is costs[i]. Return the minimum cost to make s
+equal to target. If it's not possible, return -1.</li>
 </ul>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure>
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure>
-
-
+<p>Example 1: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure> Example 2: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure></p>
 <p>Constraints:</p>
 <ul>
-<li>1 &lt;&#x3D; target.length &lt;&#x3D; 5 * 10^4</li>
-<li>1 &lt;&#x3D; words.length &#x3D;&#x3D; costs.length &lt;&#x3D; 5 * 10^4</li>
-<li>1 &lt;&#x3D; words[i].length &lt;&#x3D; target.length</li>
-<li>The total sum of words[i].length is less than or equal to 5 * 10^4.</li>
+<li>1 &lt;= target.length &lt;= 5 * 10^4</li>
+<li>1 &lt;= words.length == costs.length &lt;= 5 * 10^4</li>
+<li>1 &lt;= words[i].length &lt;= target.length</li>
+<li>The total sum of words[i].length is less than or equal to 5 *
+10^4.</li>
 <li>target and words[i] consist only of lowercase English letters.</li>
-<li>1 &lt;&#x3D; costs[i] &lt;&#x3D; 10^4</li>
+<li>1 &lt;= costs[i] &lt;= 10^4</li>
 </ul>
-<p>标准的在AC自动机上DP的题目,首先要构造TrieTree,然后初始化Fail指针，最后然后AC自动机上做DP。</p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>标准的在AC自动机上DP的题目,首先要构造TrieTree,然后初始化Fail指针，最后然后AC自动机上做DP。
+## Solution <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -510,7 +872,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -607,6 +969,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

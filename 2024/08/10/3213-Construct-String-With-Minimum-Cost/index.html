@@ -17,15 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"soundsoflife.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gittalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"soundsoflife.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gittalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="QuestionYou are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.Imagine an empty string s.You can perform the following operation any numbe">
+  <meta name="description" content="Question You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length. Imagine an empty string s. You can perform the following operation any nu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode-3213.Construct String With Minimum Cost">
-<meta property="og:url" content="https://soundsoflife.github.io/2024/08/10/LeetCode-3213-Construct-String-With-Minimum-Cost/index.html">
+<meta property="og:url" content="https://soundsoflife.github.io/2024/08/10/3213-Construct-String-With-Minimum-Cost/index.html">
 <meta property="og:site_name" content="John Wu Blog">
-<meta property="og:description" content="QuestionYou are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.Imagine an empty string s.You can perform the following operation any numbe">
+<meta property="og:description" content="Question You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length. Imagine an empty string s. You can perform the following operation any nu">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-10T12:06:35.000Z">
 <meta property="article:modified_time" content="2024-08-18T13:33:58.520Z">
@@ -33,7 +33,7 @@
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://soundsoflife.github.io/2024/08/10/LeetCode-3213-Construct-String-With-Minimum-Cost/">
+<link rel="canonical" href="https://soundsoflife.github.io/2024/08/10/3213-Construct-String-With-Minimum-Cost/">
 
 
 <script id="page-configurations">
@@ -77,7 +77,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -152,6 +156,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -166,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/10/LeetCode-3213-Construct-String-With-Minimum-Cost/">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/10/3213-Construct-String-With-Minimum-Cost/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -212,29 +217,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.<br>Imagine an empty string s.<br>You can perform the following operation any number of times (including zero):</p>
+        <h2 id="question">Question</h2>
+<p>You are given a string target, an array of strings words, and an
+integer array costs, both arrays of the same length. Imagine an empty
+string s. You can perform the following operation any number of times
+(including zero):</p>
 <ul>
 <li>Choose an index i in the range [0, words.length - 1].</li>
 <li>Append words[i] to s.</li>
-<li>The cost of operation is costs[i].<br>Return the minimum cost to make s equal to target. If it’s not possible, return -1.</li>
+<li>The cost of operation is costs[i]. Return the minimum cost to make s
+equal to target. If it's not possible, return -1.</li>
 </ul>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure>
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure>
-
-
+<p>Example 1: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure> Example 2: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure></p>
 <p>Constraints:</p>
 <ul>
-<li>1 &lt;&#x3D; target.length &lt;&#x3D; 5 * 10^4</li>
-<li>1 &lt;&#x3D; words.length &#x3D;&#x3D; costs.length &lt;&#x3D; 5 * 10^4</li>
-<li>1 &lt;&#x3D; words[i].length &lt;&#x3D; target.length</li>
-<li>The total sum of words[i].length is less than or equal to 5 * 10^4.</li>
+<li>1 &lt;= target.length &lt;= 5 * 10^4</li>
+<li>1 &lt;= words.length == costs.length &lt;= 5 * 10^4</li>
+<li>1 &lt;= words[i].length &lt;= target.length</li>
+<li>The total sum of words[i].length is less than or equal to 5 *
+10^4.</li>
 <li>target and words[i] consist only of lowercase English letters.</li>
-<li>1 &lt;&#x3D; costs[i] &lt;&#x3D; 10^4</li>
+<li>1 &lt;= costs[i] &lt;= 10^4</li>
 </ul>
-<p>标准的在AC自动机上DP的题目,首先要构造TrieTree,然后初始化Fail指针，最后然后AC自动机上做DP。</p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>标准的在AC自动机上DP的题目,首先要构造TrieTree,然后初始化Fail指针，最后然后AC自动机上做DP。
+## Solution <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -316,7 +322,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Question"><span class="nav-number">1.</span> <span class="nav-text">Question</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#question"><span class="nav-number">1.</span> <span class="nav-text">Question</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -330,7 +336,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -429,6 +435,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
@@ -441,7 +502,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'SoundsOfLife.github.io',
       owner       : 'SoundsOfLife',
       admin       : ['SoundsOfLife'],
-      id          : 'b08ccf6431edce8dac730d81fae515ca',
+      id          : 'bc3f80a87a19d57a25ec91c7018e453f',
         language: '',
       distractionFreeMode: true
     });

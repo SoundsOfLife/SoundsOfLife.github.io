@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"soundsoflife.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gittalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="John Wu Blog">
-<meta property="og:url" content="https://soundsoflife.github.io/categories/Programming-Language/index.html">
+  <meta name="description" content="引言 多线程编程中，保证多线程之间的数据的同步和互斥是非常重要的工作。Mutex(互斥锁)就是常用的一种同步机制，C++ 11中引入了 Mutex(互斥锁)这一工具，提供了一种简单高效的方式来支持多线程的数据同步，并在后续的C++ 版本中更加完善这一套工具。        类型 功能     mutex 互斥锁，最基本的互斥锁类型，mutex 同一时刻只允许一个线程持有锁，不可重入。   recu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++中的Mutex">
+<meta property="og:url" content="https://soundsoflife.github.io/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/index.html">
 <meta property="og:site_name" content="John Wu Blog">
+<meta property="og:description" content="引言 多线程编程中，保证多线程之间的数据的同步和互斥是非常重要的工作。Mutex(互斥锁)就是常用的一种同步机制，C++ 11中引入了 Mutex(互斥锁)这一工具，提供了一种简单高效的方式来支持多线程的数据同步，并在后续的C++ 版本中更加完善这一套工具。        类型 功能     mutex 互斥锁，最基本的互斥锁类型，mutex 同一时刻只允许一个线程持有锁，不可重入。   recu">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-23T13:48:09.000Z">
+<meta property="article:modified_time" content="2024-08-24T14:37:38.714Z">
 <meta property="article:author" content="John Wu">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://soundsoflife.github.io/categories/Programming-Language/">
+<link rel="canonical" href="https://soundsoflife.github.io/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Category: Programming Language | John Wu Blog</title>
+  <title>C++中的Mutex | John Wu Blog</title>
   
 
 
@@ -159,77 +164,146 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Programming Language
-          <small>Category</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="John Wu Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++中的Mutex
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-23 21:48:09" itemprop="dateCreated datePublished" datetime="2024-08-23T21:48:09+08:00">2024-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Language/" itemprop="url" rel="index"><span itemprop="name">Programming Language</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
+        <h3 id="引言">引言</h3>
+<p>多线程编程中，保证多线程之间的数据的同步和互斥是非常重要的工作。Mutex(互斥锁)就是常用的一种同步机制，C++
+11中引入了
+Mutex(互斥锁)这一工具，提供了一种简单高效的方式来支持多线程的数据同步，并在后续的C++
+版本中更加完善这一套工具。</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr>
+<th>类型</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mutex</td>
+<td>互斥锁，最基本的互斥锁类型，mutex
+同一时刻只允许一个线程持有锁，不可重入。</td>
+</tr>
+<tr>
+<td>recursive_mutex</td>
+<td>可重入互斥锁，同一线程可多次加锁，同时必须要求加锁和解锁的次数一直，才可释放锁。</td>
+</tr>
+<tr>
+<td>timed_mutex</td>
+<td>带超时功能的互斥锁，</td>
+</tr>
+<tr>
+<td>recursive_timed_mutex</td>
+<td>带超时功能的可重入互斥锁，</td>
+</tr>
+<tr>
+<td>shared_mutex(C++17)</td>
+<td>读写锁，允许多个线程同时读取共享数据，但在写操作时需要独占锁。</td>
+</tr>
+<tr>
+<td>shared_time_mutex(C++14)</td>
+<td>是 C++14
+引入的一种同步机制，用于实现读写锁（读多写少），并且支持超时功能。它允许多个线程同时读取共享数据，但在写操作时需要独占锁。相比于
+std::shared_mutex，std::shared_timed_mutex 还提供了超时锁定的功能。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考文档">参考文档:</h3>
+<p>https://cplusplus.com/reference/mutex/
+https://en.cppreference.com/w/cpp/header/mutex</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-08-23T21:48:09+08:00"
-              content="2024-08-23">
-          08-23
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/" itemprop="url">
-            <span itemprop="name">C++中的Mutex</span>
-          </a>
-      </div>
+        
 
-    </header>
-  </article>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-08-15T20:25:18+08:00"
-              content="2024-08-15">
-          08-15
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/08/15/C-11-std-once-flag-and-std-call-once/" itemprop="url">
-            <span itemprop="name">std::once_flag 和 std::call_once</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/18/6-824-Lab-3-Raft/" rel="prev" title="6.824 Lab 3: Raft">
+      <i class="fa fa-chevron-left"></i> 6.824 Lab 3: Raft
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/24/3169-Count-Days-Without-Meetings/" rel="next" title="3169. Count Days Without Meetings">
+      3169. Count Days Without Meetings <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-  </div>
+      </footer>
+    
+  </article>
   
   
-  
-
   
 
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -276,6 +350,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">2.</span> <span class="nav-text">参考文档:</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -444,6 +519,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'Ov23liLsHFFPGpV53vMC',
+      clientSecret: '4609562dc80fa5dce8437db3060b668a3887c130',
+      repo        : 'SoundsOfLife.github.io',
+      owner       : 'SoundsOfLife',
+      admin       : ['SoundsOfLife'],
+      id          : 'db152513c6080ad3118ff0db0a2a1073',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
