@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://soundsoflife.github.io/2024/08/25/3266-Final-Array-State-After-K-Multiplication-Operations-II/</loc>
+    
+    <lastmod>2024-08-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://soundsoflife.github.io/2024/08/24/3259-Maximum-Energy-Boost-From-Two-Drinks/</loc>
     
     <lastmod>2024-08-25</lastmod>
@@ -132,6 +141,13 @@
   
   <url>
     <loc>https://soundsoflife.github.io/categories/algorithm/</loc>
+    <lastmod>2024-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://soundsoflife.github.io/categories/algorithm/Programming-Language/</loc>
     <lastmod>2024-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
