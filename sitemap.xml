@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://soundsoflife.github.io/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/</loc>
+    
+    <lastmod>2024-08-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://soundsoflife.github.io/2024/08/15/C-11-std-once-flag-and-std-call-once/</loc>
+    
+    <lastmod>2024-08-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://soundsoflife.github.io/2024/08/25/3266-Final-Array-State-After-K-Multiplication-Operations-II/</loc>
     
     <lastmod>2024-08-25</lastmod>
@@ -32,15 +50,6 @@
     <loc>https://soundsoflife.github.io/2024/08/24/3169-Count-Days-Without-Meetings/</loc>
     
     <lastmod>2024-08-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://soundsoflife.github.io/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/</loc>
-    
-    <lastmod>2024-08-24</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -83,15 +92,6 @@
   </url>
   
   <url>
-    <loc>https://soundsoflife.github.io/2024/08/15/C-11-std-once-flag-and-std-call-once/</loc>
-    
-    <lastmod>2024-08-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://soundsoflife.github.io/2024/08/17/Raft-%E5%8D%8F%E8%AE%AE/</loc>
     
     <lastmod>2024-08-17</lastmod>
@@ -124,7 +124,7 @@
   </url>
   
   <url>
-    <loc>https://soundsoflife.github.io/tags/C/</loc>
+    <loc>https://soundsoflife.github.io/tags/STL/</loc>
     <lastmod>2024-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -154,7 +154,7 @@
   </url>
   
   <url>
-    <loc>https://soundsoflife.github.io/categories/Programming-Language/</loc>
+    <loc>https://soundsoflife.github.io/categories/C/</loc>
     <lastmod>2024-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
