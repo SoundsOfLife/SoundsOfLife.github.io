@@ -28,7 +28,7 @@
 <meta property="og:description" content="引言 std::mutex 是C++ 11 引入的互斥量，C++ 中和std::mutex相关的都在头文件 #include &lt;mutex&gt; 中。 介绍 std::mutex 是C++ 11中最基本的互斥量，std::mutex 对象可以提供独占所有权的特性，不支持递归的对 mutex 对象重复上锁。 std::mutex类 构造函数 std::mutex 不支持拷贝构造函数和拷贝赋值">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-25T13:35:37.000Z">
-<meta property="article:modified_time" content="2024-08-26T02:40:48.703Z">
+<meta property="article:modified_time" content="2024-08-27T03:53:17.150Z">
 <meta property="article:author" content="John Wu">
 <meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary">
@@ -225,18 +225,18 @@
 <p><code>std::mutex</code> 是C++
 11中最基本的互斥量，<code>std::mutex</code>
 对象可以提供独占所有权的特性，不支持递归的对 mutex 对象重复上锁。</p>
-<h4 id="stdmutex类">std::mutex类</h4>
-<h5 id="构造函数">构造函数</h5>
+<h3 id="stdmutex类">std::mutex类</h3>
+<h4 id="构造函数">构造函数</h4>
 <p><code>std::mutex</code> 不支持拷贝构造函数和拷贝赋值运算符。在 STL
 实现中，这两个函数都被禁用了，同时默认的创建的 <code>std::mutex</code>
-对象处于 unlocked 状态。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mutex</span>(<span class="type">const</span> mutex&amp;)            = <span class="keyword">delete</span>;  </span><br><span class="line">mutex&amp; <span class="keyword">operator</span>=(<span class="type">const</span> mutex&amp;) = <span class="keyword">delete</span>;</span><br></pre></td></tr></table></figure> ##### 成员变量
+对象处于 unlocked 状态。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mutex</span>(<span class="type">const</span> mutex&amp;)            = <span class="keyword">delete</span>;  </span><br><span class="line">mutex&amp; <span class="keyword">operator</span>=(<span class="type">const</span> mutex&amp;) = <span class="keyword">delete</span>;</span><br></pre></td></tr></table></figure> #### 成员变量
 <code>__libcpp_mutex_t</code> 这个变量是封装的操作系统提供的 mutex 类型,
 在不同的平台上，<code>__libcpp_mutex_t</code> 可能会有不同的实现。例如，在
 POSIX 兼容的系统（如 Linux 和
 macOS）上，<code>__libcpp_mutex_t</code> 可能是 <code>pthread_mutex_t</code>，而在
-Windows 系统上，它可能是一个 CRITICAL_SECTION 或其他类型。 #####
+Windows 系统上，它可能是一个 CRITICAL_SECTION 或其他类型。 ####
 非构造函数 <code>std::mutex</code> 类主要提供三个非构造函数
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">lock</span><span class="params">()</span></span>; <span class="comment">// 锁定mutex，一直阻塞到成功锁定。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">unlock</span><span class="params">()</span></span>; <span class="comment">// 解锁mutex，注意对一个没有lock的mutex进行 unlock 是UB行为。</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">try_lock</span><span class="params">()</span></span>; <span class="comment">// 直接返回，尝试锁定mutex，成功锁定返回 true，mutex 已经锁定则返回 false。</span></span><br></pre></td></tr></table></figure> ##### <code>lock_guard</code> 和 <code>unique_lock</code>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">lock</span><span class="params">()</span></span>; <span class="comment">// 锁定mutex，一直阻塞到成功锁定。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">unlock</span><span class="params">()</span></span>; <span class="comment">// 解锁mutex，注意对一个没有lock的mutex进行 unlock 是UB行为。</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">try_lock</span><span class="params">()</span></span>; <span class="comment">// 直接返回，尝试锁定mutex，成功锁定返回 true，mutex 已经锁定则返回 false。</span></span><br></pre></td></tr></table></figure> #### <code>lock_guard</code> 和 <code>unique_lock</code>
 手动使用 lock 和 unlock
 需要对代码有较高的要求，很容易忘记解锁和UB行为，所以一般都是建议使用
 RAII（Resource Acquisition Is
@@ -348,7 +348,7 @@ Initialization，资源获取即初始化）机制来管理 mutex 对象。</p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#stdmutex%E7%B1%BB"><span class="nav-number">2.1.</span> <span class="nav-text">std::mutex类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.1.</span> <span class="nav-text">构造函数</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stdmutex%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">std::mutex类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">构造函数</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

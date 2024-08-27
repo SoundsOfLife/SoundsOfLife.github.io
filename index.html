@@ -480,18 +480,18 @@
 <p><code>std::mutex</code> 是C++
 11中最基本的互斥量，<code>std::mutex</code>
 对象可以提供独占所有权的特性，不支持递归的对 mutex 对象重复上锁。</p>
-<h4 id="stdmutex类">std::mutex类</h4>
-<h5 id="构造函数">构造函数</h5>
+<h3 id="stdmutex类">std::mutex类</h3>
+<h4 id="构造函数">构造函数</h4>
 <p><code>std::mutex</code> 不支持拷贝构造函数和拷贝赋值运算符。在 STL
 实现中，这两个函数都被禁用了，同时默认的创建的 <code>std::mutex</code>
-对象处于 unlocked 状态。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mutex</span>(<span class="type">const</span> mutex&amp;)            = <span class="keyword">delete</span>;  </span><br><span class="line">mutex&amp; <span class="keyword">operator</span>=(<span class="type">const</span> mutex&amp;) = <span class="keyword">delete</span>;</span><br></pre></td></tr></table></figure> ##### 成员变量
+对象处于 unlocked 状态。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mutex</span>(<span class="type">const</span> mutex&amp;)            = <span class="keyword">delete</span>;  </span><br><span class="line">mutex&amp; <span class="keyword">operator</span>=(<span class="type">const</span> mutex&amp;) = <span class="keyword">delete</span>;</span><br></pre></td></tr></table></figure> #### 成员变量
 <code>__libcpp_mutex_t</code> 这个变量是封装的操作系统提供的 mutex 类型,
 在不同的平台上，<code>__libcpp_mutex_t</code> 可能会有不同的实现。例如，在
 POSIX 兼容的系统（如 Linux 和
 macOS）上，<code>__libcpp_mutex_t</code> 可能是 <code>pthread_mutex_t</code>，而在
-Windows 系统上，它可能是一个 CRITICAL_SECTION 或其他类型。 #####
+Windows 系统上，它可能是一个 CRITICAL_SECTION 或其他类型。 ####
 非构造函数 <code>std::mutex</code> 类主要提供三个非构造函数
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">lock</span><span class="params">()</span></span>; <span class="comment">// 锁定mutex，一直阻塞到成功锁定。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">unlock</span><span class="params">()</span></span>; <span class="comment">// 解锁mutex，注意对一个没有lock的mutex进行 unlock 是UB行为。</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">try_lock</span><span class="params">()</span></span>; <span class="comment">// 直接返回，尝试锁定mutex，成功锁定返回 true，mutex 已经锁定则返回 false。</span></span><br></pre></td></tr></table></figure> ##### <code>lock_guard</code> 和 <code>unique_lock</code>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">lock</span><span class="params">()</span></span>; <span class="comment">// 锁定mutex，一直阻塞到成功锁定。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">unlock</span><span class="params">()</span></span>; <span class="comment">// 解锁mutex，注意对一个没有lock的mutex进行 unlock 是UB行为。</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">try_lock</span><span class="params">()</span></span>; <span class="comment">// 直接返回，尝试锁定mutex，成功锁定返回 true，mutex 已经锁定则返回 false。</span></span><br></pre></td></tr></table></figure> #### <code>lock_guard</code> 和 <code>unique_lock</code>
 手动使用 lock 和 unlock
 需要对代码有较高的要求，很容易忘记解锁和UB行为，所以一般都是建议使用
 RAII（Resource Acquisition Is
