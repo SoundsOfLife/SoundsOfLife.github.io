@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"soundsoflife.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gittalk","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="引言 std::mutex 是C++ 11 引入的互斥量，C++ 中和std::mutex相关的都在头文件 #include &lt;mutex&gt; 中。 介绍 std::mutex 是C++ 11中最基本的互斥量，std::mutex 对象可以提供独占所有权的特性，不支持递归的对 mutex 对象重复上锁。 std::mutex类 构造函数 std::mutex 不支持拷贝构造函数和拷贝赋值">
+<meta property="og:type" content="article">
+<meta property="og:title" content="互斥量之 std::mutex 详解">
+<meta property="og:url" content="https://soundsoflife.github.io/2024/08/25/%E4%BA%92%E6%96%A5%E9%87%8F%E4%B9%8Bstd-mutex%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="John Wu Blog">
+<meta property="og:description" content="引言 std::mutex 是C++ 11 引入的互斥量，C++ 中和std::mutex相关的都在头文件 #include &lt;mutex&gt; 中。 介绍 std::mutex 是C++ 11中最基本的互斥量，std::mutex 对象可以提供独占所有权的特性，不支持递归的对 mutex 对象重复上锁。 std::mutex类 构造函数 std::mutex 不支持拷贝构造函数和拷贝赋值">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-25T13:35:37.000Z">
+<meta property="article:modified_time" content="2024-08-26T02:40:48.703Z">
+<meta property="article:author" content="John Wu">
+<meta property="article:tag" content="STL">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://soundsoflife.github.io/2024/08/25/%E4%BA%92%E6%96%A5%E9%87%8F%E4%B9%8Bstd-mutex%E8%AF%A6%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>互斥量之 std::mutex 详解 | John Wu Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">John Wu Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/25/%E4%BA%92%E6%96%A5%E9%87%8F%E4%B9%8Bstd-mutex%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="John Wu Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          互斥量之 std::mutex 详解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-25 21:35:37" itemprop="dateCreated datePublished" datetime="2024-08-25T21:35:37+08:00">2024-08-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="引言">引言</h3>
+<p><code>std::mutex</code> 是C++ 11 引入的互斥量，C++
+中和<code>std::mutex</code>相关的都在头文件
+<code>#include &lt;mutex&gt;</code> 中。</p>
+<h3 id="介绍">介绍</h3>
+<p><code>std::mutex</code> 是C++
+11中最基本的互斥量，<code>std::mutex</code>
+对象可以提供独占所有权的特性，不支持递归的对 mutex 对象重复上锁。</p>
+<h4 id="stdmutex类">std::mutex类</h4>
+<h5 id="构造函数">构造函数</h5>
+<p><code>std::mutex</code> 不支持拷贝构造函数和拷贝赋值运算符。在 STL
+实现中，这两个函数都被禁用了，同时默认的创建的 <code>std::mutex</code>
+对象处于 unlocked 状态。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mutex</span>(<span class="type">const</span> mutex&amp;)            = <span class="keyword">delete</span>;  </span><br><span class="line">mutex&amp; <span class="keyword">operator</span>=(<span class="type">const</span> mutex&amp;) = <span class="keyword">delete</span>;</span><br></pre></td></tr></table></figure> ##### 成员变量
+<code>__libcpp_mutex_t</code> 这个变量是封装的操作系统提供的 mutex 类型,
+在不同的平台上，<code>__libcpp_mutex_t</code> 可能会有不同的实现。例如，在
+POSIX 兼容的系统（如 Linux 和
+macOS）上，<code>__libcpp_mutex_t</code> 可能是 <code>pthread_mutex_t</code>，而在
+Windows 系统上，它可能是一个 CRITICAL_SECTION 或其他类型。 #####
+非构造函数 <code>std::mutex</code> 类主要提供三个非构造函数
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">lock</span><span class="params">()</span></span>; <span class="comment">// 锁定mutex，一直阻塞到成功锁定。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">unlock</span><span class="params">()</span></span>; <span class="comment">// 解锁mutex，注意对一个没有lock的mutex进行 unlock 是UB行为。</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">try_lock</span><span class="params">()</span></span>; <span class="comment">// 直接返回，尝试锁定mutex，成功锁定返回 true，mutex 已经锁定则返回 false。</span></span><br></pre></td></tr></table></figure> ##### <code>lock_guard</code> 和 <code>unique_lock</code>
+手动使用 lock 和 unlock
+需要对代码有较高的要求，很容易忘记解锁和UB行为，所以一般都是建议使用
+RAII（Resource Acquisition Is
+Initialization，资源获取即初始化）机制来管理 mutex 对象。</p>
+<p><code>std::lock_guard</code> 是一种简单且高效的锁管理器，它在构造时锁定互斥锁，在析构时自动解锁,
+一旦锁定后，直到 <code>std::lock_guard</code> 对象销毁之前都不会解锁。</p>
+<p><code>std::lock_guard</code> 是一个模版类, 传入的模版类必须支持 lock
+和 unlock 函数，<code>std::lock_guard</code>
+提供两个构造函数，一个是对传入一个没有锁定的 mutex , 在构造函数内部 lock
+互斥量，第二个是传入一个已经锁定的 mutex 和 标记类型
+<code>std::adopt_lock_t</code> 表示该 mutex 已经锁定了。
+<code>std::lock_guard</code>不支持拷贝构造函数和拷贝赋值运算符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Mutex</span>&gt;  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">_LIBCPP_TEMPLATE_VIS</span> _LIBCPP_THREAD_SAFETY_ANNOTATION(scoped_lockable) lock_guard &#123;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">  <span class="keyword">typedef</span> _Mutex mutex_type;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span>:  </span><br><span class="line">  mutex_type&amp; __m_;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">  <span class="function">_LIBCPP_NODISCARD_EXT _LIBCPP_HIDE_FROM_ABI <span class="keyword">explicit</span> <span class="title">lock_guard</span><span class="params">(mutex_type&amp; __m)</span>  </span></span><br><span class="line"><span class="function">      _<span class="title">LIBCPP_THREAD_SAFETY_ANNOTATION</span><span class="params">(acquire_capability(__m))</span>  </span></span><br><span class="line"><span class="function">      : __m_(__m) &#123;</span>  </span><br><span class="line">    __m_.<span class="built_in">lock</span>();  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="function">_LIBCPP_NODISCARD_EXT _LIBCPP_HIDE_FROM_ABI <span class="title">lock_guard</span><span class="params">(mutex_type&amp; __m, <span class="type">adopt_lock_t</span>)</span>  </span></span><br><span class="line"><span class="function">      _<span class="title">LIBCPP_THREAD_SAFETY_ANNOTATION</span><span class="params">(requires_capability(__m))</span>  </span></span><br><span class="line"><span class="function">      : __m_(__m) &#123;</span>&#125;  </span><br><span class="line">  _LIBCPP_HIDE_FROM_ABI ~<span class="built_in">lock_guard</span>() _LIBCPP_THREAD_SAFETY_ANNOTATION(<span class="built_in">release_capability</span>()) &#123; __m_.<span class="built_in">unlock</span>(); &#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span>:  </span><br><span class="line">  <span class="built_in">lock_guard</span>(lock_guard <span class="type">const</span>&amp;)            = <span class="keyword">delete</span>;  </span><br><span class="line">  lock_guard&amp; <span class="keyword">operator</span>=(lock_guard <span class="type">const</span>&amp;) = <span class="keyword">delete</span>;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>std::unique_lock</code> 是一种更灵活的锁管理器，除了具备 <code>std::lock_guard</code> 的功能外，还提供了手动解锁和重新锁定的能力。适用于那些需要在同一作用域内多次锁定和解锁的场景,
+同时可以选择在构造时不立即锁定，可以在需要时手动锁定，并且还可以在不同的 <code>std::unique_lock</code> 对象之间转移锁的所有权。</p>
+<p><code>std::unique_lock</code>  支持三种锁定类型: - std::defer_lock
+在构造 <code>std::unique_lock</code> 对象时不立即锁定互斥锁，而是在稍后需要时手动锁定。
+- std::try_to_lock 尝试获取互斥锁，如果无法立即获取锁，则不会阻塞线程。
+- std::adopt_lock
+互斥锁在构造 <code>std::unique_lock</code> 或 <code>std::lock_guard</code> 之前已经被锁定,将已有锁定的互斥锁的管理权交给 <code>std::unique_lock</code> 或 <code>std::lock_guard</code>,
+必须要求 mutex 已经被锁定，对一个没有锁定的 mutex 对象使用
+<code>std::adopt_lock</code>
+构造<code>std::unique_lock</code> 或 <code>std::lock_guard</code>
+是UB行为。</p>
+<p><code>std::unique_lock</code> 的实现要比 <code>std::lock_guard</code>
+复杂的多，<code>std::unique_lock</code> 也是个模版类，但是有连个成员变量
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Mutex</span>&gt;  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">_LIBCPP_TEMPLATE_VIS</span> unique_lock &#123;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">  <span class="keyword">typedef</span> _Mutex mutex_type;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span>:  </span><br><span class="line">  mutex_type* __m_;   <span class="comment">//  指向 mutex 对象的指针</span></span><br><span class="line">  <span class="type">bool</span> __owns_;      <span class="comment">//  mutex 是否锁定</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">  <span class="function">_LIBCPP_HIDE_FROM_ABI <span class="title">unique_lock</span><span class="params">()</span> _NOEXCEPT : __m_(nullptr), __owns_(false) &#123;</span>&#125;  </span><br><span class="line">  <span class="function">_LIBCPP_HIDE_FROM_ABI <span class="keyword">explicit</span> <span class="title">unique_lock</span><span class="params">(mutex_type&amp; __m)</span> : __m_(std::addressof(__m)), __owns_(true) &#123;</span>  </span><br><span class="line">    __m_-&gt;<span class="built_in">lock</span>();  </span><br><span class="line">  &#125;  </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 稍后 lock</span></span><br><span class="line">  <span class="function">_LIBCPP_HIDE_FROM_ABI <span class="title">unique_lock</span><span class="params">(mutex_type&amp; __m, <span class="type">defer_lock_t</span>)</span> _NOEXCEPT  </span></span><br><span class="line"><span class="function">      : __m_(std::addressof(__m)),  </span></span><br><span class="line"><span class="function">        __owns_(false) &#123;</span>&#125;  </span><br><span class="line"> <span class="comment">// 尝试 lock</span></span><br><span class="line">  <span class="function">_LIBCPP_HIDE_FROM_ABI <span class="title">unique_lock</span><span class="params">(mutex_type&amp; __m, <span class="type">try_to_lock_t</span>)</span>  </span></span><br><span class="line"><span class="function">      : __m_(std::addressof(__m)), __owns_(__m.try_lock()) &#123;</span>&#125;  </span><br><span class="line"> <span class="comment">// 已经 lock</span></span><br><span class="line">  <span class="function">_LIBCPP_HIDE_FROM_ABI <span class="title">unique_lock</span><span class="params">(mutex_type&amp; __m, <span class="type">adopt_lock_t</span>)</span> : __m_(std::addressof(__m)), __owns_(true) &#123;</span>&#125;  </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 指定时间之前尝试 lock</span></span><br><span class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Clock</span>, <span class="keyword">class</span> <span class="title class_">_Duration</span>&gt;  </span><br><span class="line">  <span class="function">_LIBCPP_HIDE_FROM_ABI <span class="title">unique_lock</span><span class="params">(mutex_type&amp; __m, <span class="type">const</span> chrono::time_point&lt;_Clock, _Duration&gt;&amp; <span class="type">__t</span>)</span>  </span></span><br><span class="line"><span class="function">      : __m_(std::addressof(__m)), __owns_(__m.try_lock_until(__t)) &#123;</span>&#125;  </span><br><span class="line"> <span class="comment">// 超时时间内尝试 lock</span></span><br><span class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_Rep</span>, <span class="keyword">class</span> <span class="title class_">_Period</span>&gt;  </span><br><span class="line">  <span class="function">_LIBCPP_HIDE_FROM_ABI <span class="title">unique_lock</span><span class="params">(mutex_type&amp; __m, <span class="type">const</span> chrono::duration&lt;_Rep, _Period&gt;&amp; __d)</span>  </span></span><br><span class="line"><span class="function">      : __m_(std::addressof(__m)), __owns_(__m.try_lock_for(__d)) &#123;</span>&#125;  </span><br><span class="line"></span><br><span class="line"> <span class="comment">// 如果持有锁则解锁</span></span><br><span class="line">  _LIBCPP_HIDE_FROM_ABI ~<span class="built_in">unique_lock</span>() &#123;  </span><br><span class="line">    <span class="keyword">if</span> (__owns_)  </span><br><span class="line">      __m_-&gt;<span class="built_in">unlock</span>();  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="built_in">unique_lock</span>(unique_lock <span class="type">const</span>&amp;)            = <span class="keyword">delete</span>;  </span><br><span class="line">  unique_lock&amp; <span class="keyword">operator</span>=(unique_lock <span class="type">const</span>&amp;) = <span class="keyword">delete</span>;  </span><br><span class="line"> <span class="comment">// 移动构造函数</span></span><br><span class="line">  <span class="function">_LIBCPP_HIDE_FROM_ABI <span class="title">unique_lock</span><span class="params">(unique_lock&amp;&amp; __u)</span> _NOEXCEPT : __m_(__u.__m_), __owns_(__u.__owns_) &#123;</span>  </span><br><span class="line">    __u.__m_    = <span class="literal">nullptr</span>;  </span><br><span class="line">    __u.__owns_ = <span class="literal">false</span>;  </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/STL/" rel="tag"># STL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/25/3266-Final-Array-State-After-K-Multiplication-Operations-II/" rel="prev" title="3266. Final Array State After K Multiplication Operations II">
+      <i class="fa fa-chevron-left"></i> 3266. Final Array State After K Multiplication Operations II
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/26/%E4%BA%92%E6%96%A5%E9%87%8F%E4%B9%8Bstd-shared-mutex/" rel="next" title="互斥量之 std::shared_mutex">
+      互斥量之 std::shared_mutex <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#stdmutex%E7%B1%BB"><span class="nav-number">2.1.</span> <span class="nav-text">std::mutex类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.1.</span> <span class="nav-text">构造函数</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Wu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Wu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'Ov23liLsHFFPGpV53vMC',
+      clientSecret: '4609562dc80fa5dce8437db3060b668a3887c130',
+      repo        : 'SoundsOfLife.github.io',
+      owner       : 'SoundsOfLife',
+      admin       : ['SoundsOfLife'],
+      id          : '76a4f6c96a56fa614d188ca7feff263b',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
