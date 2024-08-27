@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://soundsoflife.github.io/2024/08/27/Linux-storage-stack-diagram-v6-9/</loc>
-    
-    <lastmod>2024-08-27</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://soundsoflife.github.io/2024/08/15/C-11-std-once-flag-and-std-call-once/</loc>
     
     <lastmod>2024-08-27</lastmod>
@@ -209,13 +200,6 @@
   
   <url>
     <loc>https://soundsoflife.github.io/categories/C/</loc>
-    <lastmod>2024-08-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://soundsoflife.github.io/categories/linux/</loc>
     <lastmod>2024-08-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

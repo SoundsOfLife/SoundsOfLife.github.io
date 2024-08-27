@@ -165,73 +165,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/18/6-824-Lab-3-Raft/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Wu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="John Wu Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/18/6-824-Lab-3-Raft/" class="post-title-link" itemprop="url">6.824 Lab 3: Raft</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-08-18 21:36:25" itemprop="dateCreated datePublished" datetime="2024-08-18T21:36:25+08:00">2024-08-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>MIT 6.824 现在叫 6.5840 是分布式系统学习课程。<br>Lab 3是基于提供的代码框架实现Raft协议，要通过所有的测试用例，实验本身不难，照着Raft论文来实现既可，关键点是要细心很多地方要注意，尤其是对锁的控制以及对超时时长的把控是能否通过的实验的关键。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/17/Raft-%E5%8D%8F%E8%AE%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -280,6 +213,7 @@
 
       
           
+
       
     </div>
 
@@ -346,6 +280,7 @@
 
       
           
+
       
     </div>
 
@@ -411,39 +346,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><code>std::once_flag</code> 和 <code>std::call_once</code> 是 C++11 引入的用于确保某段代码只执行一次的线程同步机制。它们通常用于单例模式的初始化或其他需要确保只执行一次的代码块。</p>
-<h3 id="std-once-flag"><a href="#std-once-flag" class="headerlink" title="std::once_flag"></a><code>std::once_flag</code></h3><p><code>std::once_flag</code> 是一个标志对象，用于标记某段代码是否已经执行过。它与 <code>std::call_once</code> 一起使用，确保某段代码只执行一次。</p>
-<h3 id="std-call-once"><a href="#std-call-once" class="headerlink" title="std::call_once"></a><code>std::call_once</code></h3><p><code>std::call_once</code> 是一个模板函数，用于执行某段代码，并确保这段代码在多线程环境下只执行一次。它接收一个 <code>std::once_flag</code> 对象和一个可调用对象（函数、函数对象或 lambda 表达式）。</p>
-<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p>以下是一个使用 <code>std::once_flag</code> 和 <code>std::call_once</code> 的示例，展示如何在多线程环境中确保某段代码只执行一次：</p>
+          <p><code>std::once_flag</code> 和 <code>std::call_once</code> 是 C++11
+引入的用于确保某段代码只执行一次的线程同步机制。它们通常用于单例模式的初始化或其他需要确保只执行一次的代码块。</p>
+<h3 id="stdonce_flag"><code>std::once_flag</code></h3>
+<p><code>std::once_flag</code> 是一个标志对象，用于标记某段代码是否已经执行过。它与 <code>std::call_once</code> 一起使用，确保某段代码只执行一次。</p>
+<h3 id="stdcall_once"><code>std::call_once</code></h3>
+<p><code>std::call_once</code> 是一个模板函数，用于执行某段代码，并确保这段代码在多线程环境下只执行一次。它接收一个 <code>std::once_flag</code> 对象和一个可调用对象（函数、函数对象或
+lambda 表达式）。</p>
+<h3 id="示例代码">示例代码</h3>
+<p>以下是一个使用 <code>std::once_flag</code> 和 <code>std::call_once</code> 的示例，展示如何在多线程环境中确保某段代码只执行一次：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mutex&gt;</span></span></span><br><span class="line"></span><br><span class="line">std::once_flag flag;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Initialized once&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">threadFunc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::<span class="built_in">call_once</span>(flag, init);</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Thread ID: &quot;</span> &lt;&lt; std::this_thread::<span class="built_in">get_id</span>() &lt;&lt; <span class="string">&quot; executed&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">std::thread <span class="title">t1</span><span class="params">(threadFunc)</span></span>;</span><br><span class="line">    <span class="function">std::thread <span class="title">t2</span><span class="params">(threadFunc)</span></span>;</span><br><span class="line">    <span class="function">std::thread <span class="title">t3</span><span class="params">(threadFunc)</span></span>;</span><br><span class="line"></span><br><span class="line">    t<span class="number">1.</span><span class="built_in">join</span>();</span><br><span class="line">    t<span class="number">2.</span><span class="built_in">join</span>();</span><br><span class="line">    t<span class="number">3.</span><span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><ol>
+<h3 id="解释">解释</h3>
+<ol type="1">
 <li><p><strong>std::once_flag</strong>：</p>
 <ul>
 <li><code>std::once_flag flag;</code> 定义了一个 <code>std::once_flag</code> 对象 <code>flag</code>，用于标记 <code>init</code> 函数是否已经执行过。</li>
-</ul>
-</li>
+</ul></li>
 <li><p><strong>std::call_once</strong>：</p>
 <ul>
 <li><code>std::call_once(flag, init);</code> 调用 <code>std::call_once</code>，传入 <code>flag</code> 和 <code>init</code> 函数。<code>std::call_once</code> 会检查 <code>flag</code>，如果 <code>flag</code> 表示 <code>init</code> 函数还未执行过，则执行 <code>init</code> 函数，并将 <code>flag</code> 标记为已执行过。</li>
-</ul>
-</li>
+</ul></li>
 <li><p><strong>线程函数</strong>：</p>
 <ul>
 <li><code>threadFunc</code> 函数中调用 <code>std::call_once(flag, init);</code> 确保 <code>init</code> 函数只执行一次。</li>
 <li>无论多少个线程调用 <code>threadFunc</code>，<code>init</code> 函数只会执行一次。</li>
-</ul>
-</li>
+</ul></li>
 <li><p><strong>主函数</strong>：</p>
 <ul>
 <li>在 <code>main</code> 函数中，创建了三个线程 <code>t1</code>, <code>t2</code>, <code>t3</code>，它们都执行 <code>threadFunc</code> 函数。</li>
 <li>使用 <code>t1.join();</code>, <code>t2.join();</code>, <code>t3.join();</code> 确保主线程等待所有子线程完成。</li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<h3 id="注意事项">注意事项</h3>
+<ol type="1">
 <li><strong>线程安全</strong>：<code>std::call_once</code> 是线程安全的，确保传入的可调用对象在多线程环境下只执行一次。</li>
-<li><strong>可调用对象</strong>：<code>std::call_once</code> 接收的可调用对象可以是函数指针、函数对象或 lambda 表达式。</li>
+<li><strong>可调用对象</strong>：<code>std::call_once</code> 接收的可调用对象可以是函数指针、函数对象或
+lambda 表达式。</li>
 <li><strong>异常处理</strong>：如果传入的可调用对象抛出异常，<code>std::call_once</code> 不会将 <code>std::once_flag</code> 标记为已执行，这样可以在下一次调用时重新尝试执行。</li>
 </ol>
 
@@ -512,29 +450,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.<br>Imagine an empty string s.<br>You can perform the following operation any number of times (including zero):</p>
+          <h2 id="question">Question</h2>
+<p>You are given a string target, an array of strings words, and an
+integer array costs, both arrays of the same length. Imagine an empty
+string s. You can perform the following operation any number of times
+(including zero):</p>
 <ul>
 <li>Choose an index i in the range [0, words.length - 1].</li>
 <li>Append words[i] to s.</li>
-<li>The cost of operation is costs[i].<br>Return the minimum cost to make s equal to target. If it’s not possible, return -1.</li>
+<li>The cost of operation is costs[i]. Return the minimum cost to make s
+equal to target. If it's not possible, return -1.</li>
 </ul>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure>
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure>
-
-
+<p>Example 1: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure> Example 2: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure></p>
 <p>Constraints:</p>
 <ul>
-<li>1 &lt;&#x3D; target.length &lt;&#x3D; 5 * 10^4</li>
-<li>1 &lt;&#x3D; words.length &#x3D;&#x3D; costs.length &lt;&#x3D; 5 * 10^4</li>
-<li>1 &lt;&#x3D; words[i].length &lt;&#x3D; target.length</li>
-<li>The total sum of words[i].length is less than or equal to 5 * 10^4.</li>
+<li>1 &lt;= target.length &lt;= 5 * 10^4</li>
+<li>1 &lt;= words.length == costs.length &lt;= 5 * 10^4</li>
+<li>1 &lt;= words[i].length &lt;= target.length</li>
+<li>The total sum of words[i].length is less than or equal to 5 *
+10^4.</li>
 <li>target and words[i] consist only of lowercase English letters.</li>
-<li>1 &lt;&#x3D; costs[i] &lt;&#x3D; 10^4</li>
+<li>1 &lt;= costs[i] &lt;= 10^4</li>
 </ul>
-<p>标准的在AC自动机上DP的题目,首先要构造TrieTree,然后初始化Fail指针，最后然后AC自动机上做DP。</p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>标准的在AC自动机上DP的题目,首先要构造TrieTree,然后初始化Fail指针，最后然后AC自动机上做DP。
+## Solution <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -619,14 +558,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
