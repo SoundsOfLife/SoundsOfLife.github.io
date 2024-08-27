@@ -213,7 +213,6 @@
 
       
           
-
       
     </div>
 
@@ -280,7 +279,6 @@
 
       
           
-
       
     </div>
 
@@ -413,30 +411,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="question">Question</h2>
-<p>You are given a string target, an array of strings words, and an
-integer array costs, both arrays of the same length. Imagine an empty
-string s. You can perform the following operation any number of times
-(including zero):</p>
+          <h2 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>You are given a string target, an array of strings words, and an integer array costs, both arrays of the same length.<br>Imagine an empty string s.<br>You can perform the following operation any number of times (including zero):</p>
 <ul>
 <li>Choose an index i in the range [0, words.length - 1].</li>
 <li>Append words[i] to s.</li>
-<li>The cost of operation is costs[i]. Return the minimum cost to make s
-equal to target. If it's not possible, return -1.</li>
+<li>The cost of operation is costs[i].<br>Return the minimum cost to make s equal to target. If it’s not possible, return -1.</li>
 </ul>
-<p>Example 1: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure> Example 2: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure></p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;abcdef&quot;, words = [&quot;abdef&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;def&quot;,&quot;ef&quot;], costs = [100,1,1,10,5]</span><br><span class="line"></span><br><span class="line">Output: 7</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">The minimum cost can be achieved by performing the following operations:</span><br><span class="line"></span><br><span class="line">* Select index 1 and append &quot;abc&quot; to s at a cost of 1, resulting in s = &quot;abc&quot;.</span><br><span class="line">* Select index 2 and append &quot;d&quot; to s at a cost of 1, resulting in s = &quot;abcd&quot;.</span><br><span class="line">* Select index 4 and append &quot;ef&quot; to s at a cost of 5, resulting in s = &quot;abcdef&quot;.</span><br></pre></td></tr></table></figure>
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: target = &quot;aaaa&quot;, words = [&quot;z&quot;,&quot;zz&quot;,&quot;zzz&quot;], costs = [1,10,100]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line"></span><br><span class="line">It is impossible to make s equal to target, so we return -1.</span><br></pre></td></tr></table></figure>
+
+
 <p>Constraints:</p>
 <ul>
-<li>1 &lt;= target.length &lt;= 5 * 10^4</li>
-<li>1 &lt;= words.length == costs.length &lt;= 5 * 10^4</li>
-<li>1 &lt;= words[i].length &lt;= target.length</li>
-<li>The total sum of words[i].length is less than or equal to 5 *
-10^4.</li>
+<li>1 &lt;&#x3D; target.length &lt;&#x3D; 5 * 10^4</li>
+<li>1 &lt;&#x3D; words.length &#x3D;&#x3D; costs.length &lt;&#x3D; 5 * 10^4</li>
+<li>1 &lt;&#x3D; words[i].length &lt;&#x3D; target.length</li>
+<li>The total sum of words[i].length is less than or equal to 5 * 10^4.</li>
 <li>target and words[i] consist only of lowercase English letters.</li>
-<li>1 &lt;= costs[i] &lt;= 10^4</li>
+<li>1 &lt;&#x3D; costs[i] &lt;&#x3D; 10^4</li>
 </ul>
-<p>标准的在AC自动机上DP的题目,首先要构造TrieTree,然后初始化Fail指针，最后然后AC自动机上做DP。
-## Solution <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>标准的在AC自动机上DP的题目,首先要构造TrieTree,然后初始化Fail指针，最后然后AC自动机上做DP。</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumCost</span><span class="params">(string target, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt;&amp; costs)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
