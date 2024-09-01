@@ -165,6 +165,190 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="John Wu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/23/C-%E4%B8%AD%E7%9A%84Mutex/" class="post-title-link" itemprop="url">C++ 中的 Mutex</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-23 21:48:09" itemprop="dateCreated datePublished" datetime="2024-08-23T21:48:09+08:00">2024-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="引言">引言</h3>
+<p>多线程编程中，保证多线程之间的数据的同步和互斥是非常重要的工作。Mutex(互斥锁)就是常用的一种同步机制，C++
+11中引入了
+Mutex(互斥锁)这一工具，提供了一种简单高效的方式来支持多线程的数据同步，并在后续的C++
+版本中更加完善这一套工具。</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr>
+<th>类型</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mutex</td>
+<td>互斥锁，最基本的互斥锁类型，mutex
+同一时刻只允许一个线程持有锁，不可重入。</td>
+</tr>
+<tr>
+<td>recursive_mutex</td>
+<td>可重入互斥锁，同一线程可多次加锁，同时必须要求加锁和解锁的次数一直，才可释放锁。</td>
+</tr>
+<tr>
+<td>timed_mutex</td>
+<td>带超时功能的互斥锁。</td>
+</tr>
+<tr>
+<td>recursive_timed_mutex</td>
+<td>带超时功能的可重入互斥锁。</td>
+</tr>
+<tr>
+<td>shared_mutex(C++17)</td>
+<td>读写锁，允许多个线程同时读取共享数据，但在写操作时需要独占锁。</td>
+</tr>
+<tr>
+<td>shared_time_mutex(C++14)</td>
+<td>是 C++14
+引入的一种同步机制，用于实现读写锁（读多写少），并且支持超时功能。它允许多个线程同时读取共享数据，但在写操作时需要独占锁。相比于
+std::shared_mutex，std::shared_timed_mutex 还提供了超时锁定的功能。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考文档">参考文档</h3>
+<p>https://cplusplus.com/reference/mutex/</p>
+<p>https://en.cppreference.com/w/cpp/header/mutex</p>
+<p>https://en.cppreference.com/w/cpp/thread/shared_mutex</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/18/6-824-Lab-3-Raft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="John Wu Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/18/6-824-Lab-3-Raft/" class="post-title-link" itemprop="url">6.824 Lab 3: Raft</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-18 21:36:25" itemprop="dateCreated datePublished" datetime="2024-08-18T21:36:25+08:00">2024-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>MIT 6.824 现在叫 6.5840 是分布式系统学习课程。 Lab
+3是基于提供的代码框架实现Raft协议，要通过所有的测试用例，实验本身不难，照着Raft论文来实现既可，关键点是要细心很多地方要注意，尤其是对锁的控制以及对超时时长的把控是能否通过的实验的关键。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://soundsoflife.github.io/2024/08/17/Raft-%E5%8D%8F%E8%AE%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -558,7 +742,7 @@ equal to target. If it's not possible, return -1.</li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
